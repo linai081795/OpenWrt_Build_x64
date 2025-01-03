@@ -268,6 +268,9 @@ jobs:
       with:
         name: ${{ env.FILE_NAME }}-${{ env.KERNEL }}_bin-${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
+  
+    - name: SSH远程连接（make menuconfig）
+      uses: danshui-git/debugger-action@main
 
     - name: Upload config
       uses: actions/upload-artifact@main
