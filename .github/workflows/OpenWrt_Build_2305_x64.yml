@@ -21,10 +21,10 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds_config/lede23.feeds.conf.default
-  CONFIG_FILE: config/lede_config/2305_x64.config
+  CONFIG_FILE: config/lede_config/2305_x64_all.config
   CONFIGS: config/lede_config
-  DIY_P1_SH: diy_script/lede_diy/x86/2305_x64_diy-part1.sh
-  DIY_P2_SH: diy_script/lede_diy/x86/2305_x64_diy-part2.sh
+  DIY_P1_SH: diy_script/lede_diy/x86/2305_x64_all_diy-part1.sh
+  DIY_P2_SH: diy_script/lede_diy/x86/2305_x64_all_diy-part2.sh
   CLASH_KERNEL: amd64
   UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
@@ -33,7 +33,7 @@ env:
   TELEGRAM_WORK_PUSH: false
   WECHAT_WORK_PUSH: true
   TZ: Asia/Shanghai
-  FILE_NAME: OpenWrt_2305_x64
+  FILE_NAME: OpenWrt_2305_x64_all
   PRODUCT_NAME: x86_64
 
 jobs:
@@ -170,7 +170,6 @@ jobs:
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
-        
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
@@ -269,10 +268,6 @@ jobs:
       with:
         name: ${{ env.FILE_NAME }}-${{ env.KERNEL }}_bin-${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
-
-    - name: SSH远程连接（make menuconfig）
-      uses: danshui-git/debugger-action@main
-
 
     - name: Upload config
       uses: actions/upload-artifact@main
