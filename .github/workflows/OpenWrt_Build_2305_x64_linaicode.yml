@@ -229,7 +229,7 @@ jobs:
         echo
         cat .config
     - name: SSH远程连接（make menuconfig）
-      if: env.SSH_ACTION == 'true'
+      # if: env.SSH_ACTION == 'true'
       uses: danshui-git/debugger-action@main
 
     - name: Download package
