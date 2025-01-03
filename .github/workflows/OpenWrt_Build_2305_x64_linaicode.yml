@@ -1,17 +1,17 @@
 #===============================================
-# Description: OpenWrt_Build_2305_x64_all
+# Description: OpenWrt_Build_2305_x64
 # Lisence: MIT
 # By：GXNAS
 #===============================================
 
-name: OpenWrt_Build_2305_x64_all
+name: OpenWrt_Build_2305_x64-diy
 
 on:
   repository_dispatch:
   workflow_dispatch:
     inputs:
       checkupdates66:
-        description: '启动OpenWrt_Build_2305_x64_all编译'
+        description: '启动OpenWrt_Build_2305_x64编译'
         required: true
         default: 'true'
   schedule:
@@ -42,7 +42,7 @@ jobs:
     env:
       REPO_URL_Lede: https://github.com/coolsnowwolf/lede
       REPO_BRANCH_Lede: master
-      REPO_PATH_Lede : "2305_x64_all"
+      REPO_PATH_Lede : "2305_x64"
     outputs:
       output: ${{ steps.outputunifreq.outputs.unifreq }}
     steps:
@@ -51,20 +51,20 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL_Lede -b $REPO_BRANCH_Lede $REPO_PATH_Lede
         cd $REPO_PATH_Lede
-        echo "commitHash_2305_x64_all=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        echo "commitHash_2305_x64=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
         cd
 
     - name: Show Commit Head and Combination Heads
       id: combHeader
       run: |
-        echo "commitHash_2305_x64_all: ${{ steps.getHash.outputs.commitHash_2305_x64_all }}"
+        echo "commitHash_2305_x64: ${{ steps.getHash.outputs.commitHash_2305_x64 }}"
 
     - name: Compare Commit Hash
       id: cacheHash
       uses: actions/cache@main
       with:
-        path: .commitHash_2305_x64_all
-        key: HEAD-${{ steps.getHash.outputs.commitHash_2305_x64_all }}
+        path: .commitHash_2305_x64
+        key: HEAD-${{ steps.getHash.outputs.commitHash_2305_x64 }}
 
     - name: Set output for next job
       id: outputunifreq
@@ -75,9 +75,9 @@ jobs:
     - name: Save New Commit Hash
       if: steps.cacheHash.outputs.cache-hit != 'true'
       run: |
-        echo ${{ steps.getHash.outputs.commitHash_2305_x64_all }} | tee .commitHash_2305_x64_all
+        echo ${{ steps.getHash.outputs.commitHash_2305_x64 }} | tee .commitHash_2305_x64
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////
-  Build_2305_x64_all:
+  Build_2305_x64:
     needs: [CheckRepo]
     if: ${{ needs.CheckRepo.outputs.output != 'hello' || github.event.inputs.checkupdates66 == 'true'}}
     runs-on: ubuntu-22.04
@@ -233,6 +233,9 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
+    - name: SSH远程连接（make menuconfig）
+      uses: danshui-git/debugger-action@main
+
     - name: Compile the firmware
       id: compile
       run: |
@@ -269,10 +272,6 @@ jobs:
       with:
         name: ${{ env.FILE_NAME }}-${{ env.KERNEL }}_bin-${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
-
-    - name: SSH远程连接（make menuconfig）
-      uses: danshui-git/debugger-action@main
-
 
     - name: Upload config
       uses: actions/upload-artifact@main
