@@ -14,6 +14,11 @@ on:
         description: '启动OpenWrt_Build_2305_x64编译'
         required: true
         default: 'true'
+      SSH_ACTION:
+        description: 'SSH远程配置固件'
+        required: false
+        default: 'false'
+        type: boolean
   schedule:
     - cron: 0 2 * * 5
 
@@ -223,6 +228,9 @@ jobs:
         echo
         echo
         cat .config
+    - name: SSH远程连接（make menuconfig）
+      if: env.SSH_ACTION == 'true'
+      uses: danshui-git/debugger-action@main
 
     - name: Download package
       id: package
@@ -232,9 +240,6 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-
-    - name: SSH远程连接（make menuconfig）
-      uses: hmarr/debug-action@v3
 
     - name: Compile the firmware
       id: compile
