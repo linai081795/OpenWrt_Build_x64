@@ -4,7 +4,7 @@
 # By：GXNAS
 #===============================================
 
-name: OpenWrt_Build_2305_x64_all
+name: OpenWrt_Build_2305_x64
 
 on:
   repository_dispatch:
