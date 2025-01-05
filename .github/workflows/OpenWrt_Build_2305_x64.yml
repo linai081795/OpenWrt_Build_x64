@@ -1,7 +1,7 @@
 #===============================================
 # Description: OpenWrt_Build_2305_x64
 # Lisence: MIT
-# By：GXNAS
+# By：linai081795
 #===============================================
 
 name: OpenWrt_Build_2305_x64_自用
@@ -320,7 +320,7 @@ jobs:
           - 🌻 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
           - 🚀 内核版本: ${{ env.KERNEL }}
-          - 🌐 默认地址：192.168.18.1
+          - 🌐 默认地址：192.168.100.2
           - 🔑 默认密码：无密码
           - 🧊 更新时间：${{ env.date }}
           - 🎈 源码哈希值：${{ env.hash }}
@@ -351,11 +351,11 @@ jobs:
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
           - 🚀 内核版本: ${{ env.KERNEL }}
-          - 🌐 默认地址：192.168.1.11
+          - 🌐 默认地址：192.168.100.2
           - 🔑 默认密码：无密码
           - 🧊 更新时间：${{ env.date }}
           - 🎈 源码哈希值：${{ env.hash }}
-          https://github.com/gxnas/OpenWrt_Build_x64/releases/tag/${{ env.FILE_NAME }}
+          https://github.com/linai081795/OpenWrt_Build_x64/releases/tag/${{ env.FILE_NAME }}
 
     - name: Enterprise WeChat notification upload success
       if: env.WECHAT_WORK_PUSH == 'true'
@@ -374,9 +374,9 @@ jobs:
                     - ⚽ 固件源码: ${{ env.REPO_URL }}\n
                     - 💝 源码分支: ${{ env.REPO_BRANCH }}\n
                     - 🚀 内核版本: ${{ env.KERNEL }}\n
-                    - 🌐 默认地址：192.168.18.1\n
+                    - 🌐 默认地址：192.168.100.2\n
                     - 🧊 更新时间：${{env.release}}",
-                  "url": "https://github.com/gxnas/OpenWrt_Build_x64/releases/tag/${{ env.FILE_NAME }}"
+                  "url": "https://github.com/linai081795/OpenWrt_Build_x64/releases/tag/${{ env.FILE_NAME }}"
                 }
               ]
             }
