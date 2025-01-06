@@ -42,9 +42,9 @@ sed -i 's/invalid users = root/#&/g' feeds/packages/net/samba4/files/smb.conf.te
 sed -i '/\* \* \* \/etc\/coremark.sh/d' feeds/packages/utils/coremark/*
 
 # 修改 argon 为默认主题
-# sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
-# sed -i 's/Bootstrap theme/Argon theme/g' feeds/luci/collections/*/Makefile
-# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/*/Makefile
+sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
+sed -i 's/Bootstrap theme/Argon theme/g' feeds/luci/collections/*/Makefile
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/*/Makefile
 
 # 最大连接数修改为65535
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
@@ -104,24 +104,24 @@ make && sudo make install
 popd
 
 # argon 主题
-# rm -rf feeds/luci/themes/luci-theme-argon
-# rm -rf feeds/luci/applications/luci-app-argon-config
-# git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
-# git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
-# git clone --depth=1 -b js https://github.com/lwb1978/luci-theme-kucat package/luci-theme-kucat
+rm -rf feeds/luci/themes/luci-theme-argon
+rm -rf feeds/luci/applications/luci-app-argon-config
+git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
+git clone --depth=1 -b js https://github.com/lwb1978/luci-theme-kucat package/luci-theme-kucat
 
 # 更改argon主题背景
-# cp -f $GITHUB_WORKSPACE/personal/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
+cp -f $GITHUB_WORKSPACE/personal/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
 # 显示增加编译时间
 sed -i "s/DISTRIB_REVISION='R[0-9]\+\.[0-9]\+\.[0-9]\+'/DISTRIB_REVISION='@R$build_date'/g" package/lean/default-settings/files/zzz-default-settings
 sed -i 's/LEDE/OpenWrt_2305_x64 by 小皮 build/g' package/lean/default-settings/files/zzz-default-settings
 
 # 修改右下角脚本版本信息
-# sed -i 's/<a class=\"luci-link\" href=\"https:\/\/github.com\/openwrt\/luci\" target=\"_blank\">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)<\/a>/OpenWrt_2305_x64_全功能版 by GXNAS build @R'"$build_date"'/' package/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+sed -i 's/<a class=\"luci-link\" href=\"https:\/\/github.com\/openwrt\/luci\" target=\"_blank\">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)<\/a>/OpenWrt_2305_x64 build @R'"$build_date"'/' package/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 # sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a class="luci-link" href="https://wp.gxnas.com" target="_blank">🌐固件编译者：【GXNAS博客】</a>|' package/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 # sed -i 's|<%= ver.distversion %>|<a href="https://d.gxnas.com" target="_blank">👆点这里下载最新版本</a>|' package/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-# sed -i "/<a class=\"luci-link\"/d; /<a href=\"https:\/\/github.com\/jerrykuku\/luci-theme-argon\"/d; s|<%= ver.distversion %>|OpenWrt_2305_x64 by 小皮 build @R$build_date|" package/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+sed -i "/<a class=\"luci-link\"/d; /<a href=\"https:\/\/github.com\/jerrykuku\/luci-theme-argon\"/d; s|<%= ver.distversion %>|OpenWrt_2305_x64 by 小皮 build @R$build_date|" package/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 
 # 修改欢迎banner
 cp -f $GITHUB_WORKSPACE/personal/banner package/base-files/files/etc/banner
